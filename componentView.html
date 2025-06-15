@@ -170,6 +170,8 @@
         align-items: center;
         box-sizing: border-box;
         overflow-x: auto;
+        margin-left: 1em;
+        margin-right: 1em;
       }
 
       table.dynamic-table {
@@ -242,8 +244,8 @@
       @media (max-width: 768px) {
         .table-container {
           padding: 4px;
-          width: 100vw;
-          margin: 0;
+          width: calc(100vw - 2em); /* Subtract 2em (1em from each side) */
+          margin: 0 1em;
           overflow-x: auto;
         }
 
