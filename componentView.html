@@ -63,7 +63,60 @@
       const MDCTopAppBar = mdc.topAppBar.MDCTopAppBar;
     </script>
   </head>
+  <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+    button {
+      margin: 10px;
+    }
 
+    .mdc-drawer--open {
+      display: block;
+    }
+
+    main {
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .container {
+      display: flex;
+      justify-content: flex-end;
+      padding: 3em;
+      flex-direction: column;
+      width: 100vw;
+    }
+
+    .mdc-text-field {
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: "Roboto", sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    body {
+      background-image: url(minimalist-forest-rust-art-69cv6v3w9wpwmsws.jpg);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100vh;
+      width: 100vw;
+    }
+  </style>
   <body>
     <main>
       <table>
