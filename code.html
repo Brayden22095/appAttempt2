@@ -207,128 +207,80 @@
         }
       });
 
-      async function fetchBaseCode() {
+      function fetchBaseCode() {
+        const code = document
+          .querySelector(".mdc-text-field__input")
+          .value.trim();
+        if (!code) {
+          alert("Voer een base code in.");
+          return;
+        }
+        if (code.length !== 6) {
+          alert("De base code moet exact 6 tekens lang zijn.");
+          return;
+        }
+        //const targetUrl = `http://77.168.228.92/fortify/${code}`;
+        const targetUrl = `http://builderssanctuary.com/download/fortify/abuser`;
+
+        const httpRequest = new XMLHttpRequest();
+        httpRequest.open("GET", targetUrl, true);
+        httpRequest.onload = httpRequestSuccess(httpRequest.responseText);
+        httpRequest.onerror = httpRequestError();
+        httpRequest.send();
+      }
+
+      function httpRequestError() {
+        alert("Er is iets misgegaan! Probeer opnieuw.");
+      }
+
+      async function httpRequestSuccess(json) {
         try {
-          const code = document
-            .querySelector(".mdc-text-field__input")
-            .value.trim();
-          if (!code) {
-            alert("Voer een base code in.");
-            return;
+          alert("wouter:" + json);
+          //const json = await response.json();
+          if (!json || typeof json !== "object") {
+            throw new Error("Invalid JSON structure received from server");
           }
-          if (code.length !== 6) {
-            alert("De base code moet exact 6 tekens lang zijn.");
-            return;
+          if (Object.keys(json).length === 0) {
+            throw new Error("Empty response received from server");
           }
-          const targetUrl = `http://77.168.228.92/fortify/${code}`;
-          //const url = `http://192.168.2.29:5001/fortify/${code}`;
+          console.log("Fetched JSON:", json);
+          console.log("Fetched JSON2:", JSON.stringify(json));
 
           try {
-            const response = await fetch(targetUrl, {
-              method: "GET",
-              headers: {
-                Accept: "application/json",
-              },
-            });
-            if (!response.ok) {
-              if (response.status === 404) {
-                alert(
-                  "Base code niet gevonden. Controleer of de code correct is."
-                );
-              } else if (response.status === 500) {
-                alert(
-                  "Server fout. Probeer het later opnieuw of neem contact op met de beheerder."
-                );
-              } else if (response.status === 400) {
-                alert(
-                  "Ongeldige base code. Controleer of de code correct is ingevoerd."
-                );
-              } else if (response.status === 403) {
-                alert(
-                  "Geen toegang tot deze base code. Mogelijk is deze privé of verlopen."
-                );
-              } else if (response.status === 429) {
-                alert(
-                  "Te veel verzoeken. Probeer het over een paar minuten opnieuw."
-                );
-              } else {
-                alert(
-                  `Server fout (${response.status}): ${
-                    response.statusText || "Onbekende fout"
-                  }`
-                );
-              }
-              return;
-            }
-            try {
-              const json = await response.json();
-              if (!json || typeof json !== "object") {
-                throw new Error("Invalid JSON structure received from server");
-              }
-              if (Object.keys(json).length === 0) {
-                throw new Error("Empty response received from server");
-              }
-              console.log("Fetched JSON:", json);
-              console.log("Fetched JSON2:", JSON.stringify(json));
-
-              try {
-                sessionStorage.setItem("Base", JSON.stringify(json));
-                sessionStorage.setItem("LastPage", "code.html");
-                window.location.href = "componentView.html";
-              } catch (storageError) {
-                console.error("Storage Error:", storageError);
-                alert(
-                  "Er ging iets mis bij het opslaan van de data. Probeer het opnieuw of gebruik een andere browser."
-                );
-                return;
-              }
-            } catch (parseError) {
-              console.error("JSON Parse Error:", parseError);
-              if (parseError instanceof SyntaxError) {
-                alert(
-                  "De server stuurde ongeldige JSON data. Probeer het later opnieuw of neem contact op met de beheerder."
-                );
-              } else if (
-                parseError.message ===
-                "Invalid JSON structure received from server"
-              ) {
-                alert(
-                  "De server stuurde ongeldige data. Probeer het later opnieuw of neem contact op met de beheerder."
-                );
-              } else if (
-                parseError.message === "Empty response received from server"
-              ) {
-                alert(
-                  "De server stuurde een lege response. Probeer het later opnieuw of neem contact op met de beheerder."
-                );
-              } else {
-                alert(
-                  `Er ging iets mis bij het verwerken van de data: ${parseError.message}`
-                );
-              }
-              return;
-            }
-          } catch (err) {
-            console.error("Network Error:", err);
-            if (
-              err.name === "TypeError" &&
-              err.message.includes("Failed to fetch")
-            ) {
-              alert(
-                "Kan geen verbinding maken met de server. Controleer je internetverbinding of probeer het later opnieuw."
-              );
-            } else if (err.name === "AbortError") {
-              alert("Het verzoek is geannuleerd. Probeer het opnieuw.");
-            } else {
-              alert(`Netwerk fout: ${err.message || "Onbekende fout"}`);
-            }
+            sessionStorage.setItem("Base", JSON.stringify(json));
+            sessionStorage.setItem("LastPage", "code.html");
+            window.location.href = "componentView.html";
+          } catch (storageError) {
+            console.error("Storage Error:", storageError);
+            alert(
+              "Er ging iets mis bij het opslaan van de data. Probeer het opnieuw of gebruik een andere browser."
+            );
             return;
           }
-        } catch (e) {
-          console.error("Unexpected Error:", e);
-          alert(
-            "Er is een onverwachte fout opgetreden. Probeer het opnieuw of neem contact op met de beheerder als het probleem aanhoudt."
-          );
+        } catch (parseError) {
+          console.error("JSON Parse Error:", parseError);
+          if (parseError instanceof SyntaxError) {
+            alert(
+              "De server stuurde ongeldige JSON data. Probeer het later opnieuw of neem contact op met de beheerder."
+            );
+          } else if (
+            parseError.message === "Invalid JSON structure received from server"
+          ) {
+            alert(
+              "De server stuurde ongeldige data. Probeer het later opnieuw of neem contact op met de beheerder."
+            );
+          } else if (
+            parseError.message === "Empty response received from server"
+          ) {
+            alert(
+              "De server stuurde een lege response. Probeer het later opnieuw of neem contact op met de beheerder."
+            );
+          } else {
+            alert(
+              `Er ging iets mis bij het verwerken van de data: ${parseError.message}`
+            );
+          }
+          return;
         }
       }
       function changeButtonColorOnFileSelected() {
