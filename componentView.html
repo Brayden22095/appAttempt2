@@ -16,61 +16,33 @@
     />
 
     <style>
-      /* Basic styling */
+      /* Aangepaste font-familie */
       body {
         font-family: "Roboto", sans-serif;
-        margin: 0;
-        padding: 20px;
-        background-image: url(minimalist-forest-rust-art-69cv6v3w9wpwmsws.jpg);
+        /* De achtergrondafbeelding is hier hardcoded, zorg ervoor dat het pad correct is op je server */
+        background-image: url("minimalist-forest-rust-art-69cv6v3w9wpwmsws.jpg"); /* Placeholder afbeelding */
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         min-height: 100vh;
       }
 
-      .table-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        background: rgba(40, 20, 20, 0.95);
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        padding: 20px;
-      }
-
-      .dynamic-table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-
+      /* Overrides voor generieke Tailwind styling voor betere controle waar nodig */
       .dynamic-table th,
       .dynamic-table td {
-        padding: 12px;
-        text-align: left;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         cursor: pointer;
-        color: #e8d0aa;
+        border-bottom: 2px solid #8b4513;
+        color: #ffffff;
       }
 
       .dynamic-table th {
-        background-color: rgba(80, 40, 40, 0.8);
-        font-weight: 500;
-        color: #ffd700;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-
-      .dynamic-table tr:hover {
-        background-color: rgba(100, 50, 50, 0.4);
-      }
-
-      /* Total row styling */
-      .dynamic-table tr:last-child {
-        background-color: rgba(120, 60, 60, 0.6);
-        font-weight: 500;
+        color: #ffffff;
+        border-bottom: 3px solid #8b4513;
       }
 
       .dynamic-table tr:last-child td {
-        color: #ffd700;
+        color: #ffffff;
+        border-bottom: none;
       }
 
       /* Sheet styling */
@@ -98,7 +70,7 @@
         flex: 1;
         overflow-y: auto;
         position: relative;
-        margin-top: 64px;
+        padding-top: 64px; /* Ruimte voor de top-app-bar */
       }
 
       .sheet__content {
@@ -128,23 +100,6 @@
 
       .hidden {
         display: none;
-      }
-
-      /* Button styling */
-      .mdc-button {
-        background-color: #8b4513;
-        color: #ffd700;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-
-      .mdc-button:hover {
-        background-color: #6b3410;
       }
 
       /* Top app bar styling */
@@ -177,6 +132,129 @@
 
       .mdc-icon-button:hover {
         background-color: rgba(255, 215, 0, 0.1);
+      }
+
+      /* Media Query voor kleinere schermen (bijv. mobiel) */
+      @media (max-width: 768px) {
+        .table-container {
+          padding: 10px;
+          margin: 10px;
+        }
+
+        .dynamic-table th,
+        .dynamic-table td {
+          padding: 8px;
+          font-size: 0.9rem;
+        }
+
+        .sheet__content h2 {
+          font-size: 1.5rem;
+        }
+
+        .sheet__content p {
+          font-size: 1rem;
+        }
+      }
+
+      /* Media Query voor zeer kleine schermen (bijv. smallere telefoons) */
+      @media (max-width: 480px) {
+        .dynamic-table th,
+        .dynamic-table td {
+          padding: 6px;
+          font-size: 0.8rem;
+          /* Optioneel: Maak de tabel scrollbaar als de inhoud niet past */
+          display: block; /* Zorgt ervoor dat cellen onder elkaar komen */
+          width: 100%;
+          box-sizing: border-box; /* Zorgt ervoor dat padding meegenomen wordt in de breedte */
+        }
+
+        .dynamic-table thead {
+          display: none; /* Verberg de tabelkop op kleine schermen */
+        }
+
+        .dynamic-table tr {
+          margin-bottom: 10px;
+          display: block;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 8px;
+          padding: 10px;
+        }
+
+        .dynamic-table td {
+          text-align: right;
+          position: relative;
+          padding-left: 50%;
+        }
+
+        .dynamic-table td::before {
+          content: attr(data-label);
+          position: absolute;
+          left: 0;
+          width: 45%;
+          padding-left: 10px;
+          font-weight: bold;
+          text-align: left;
+          color: #ffd700;
+        }
+        .mdc-button {
+          padding: 6px 12px;
+          font-size: 0.9rem;
+        }
+      }
+
+      .table-container {
+        max-width: 1200px;
+        margin: 20px auto;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+      }
+
+      .dynamic-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .dynamic-table th,
+      .dynamic-table td {
+        cursor: pointer;
+        border-bottom: 2px solid #8b4513;
+        color: #ffffff;
+        padding: 12px 15px;
+        text-align: left;
+      }
+
+      .dynamic-table th {
+        color: #ffffff;
+        border-bottom: 3px solid #8b4513;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .dynamic-table tr:hover {
+        background-color: rgba(139, 69, 19, 0.2);
+      }
+
+      .dynamic-table tr:last-child td {
+        color: #ffffff;
+        border-bottom: none;
+        font-weight: 600;
+      }
+
+      .mdc-button {
+        background-color: #8b4513;
+        color: #ffffff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      .mdc-button:hover {
+        background-color: #6b3410;
       }
     </style>
 
