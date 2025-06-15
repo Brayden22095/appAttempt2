@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <meta name="description" content="Sanc Base Calculator" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icon512_rounded.png"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"
+    />
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    />
+
+    <link rel="manifest" href="manifest.json" />
+
+    <script>
+      const MDCBanner = mdc.banner.MDCBanner;
+      const MDCCheckbox = mdc.checkbox.MDCCheckbox;
+      const MDCChip = mdc.chips.MDCChip;
+      const MDCChipSet = mdc.chips.MDCChipSet;
+      const MDCCircularProgress = mdc.circularProgress.MDCCircularProgress;
+      const MDCDataTable = mdc.dataTable.MDCDataTable;
+      const MDCDialog = mdc.dialog.MDCDialog;
+      const MDCDrawer = mdc.drawer.MDCDrawer;
+      const MDCFloatingLabel = mdc.floatingLabel.MDCFloatingLabel;
+      const MDCFormField = mdc.formField.MDCFormField;
+      const MDCIconButtonToggle = mdc.iconButton.MDCIconButtonToggle;
+      const MDCLineRipple = mdc.lineRipple.MDCLineRipple;
+      const MDCLinearProgress = mdc.linearProgress.MDCLinearProgress;
+      const MDCList = mdc.list.MDCList;
+      const MDCMenu = mdc.menu.MDCMenu;
+      const MDCMenuSurface = mdc.menuSurface.MDCMenuSurface;
+      const MDCNotchedOutline = mdc.notchedOutline.MDCNotchedOutline;
+      const MDCRadio = mdc.radio.MDCRadio;
+      const MDCRipple = mdc.ripple.MDCRipple;
+      const MDCSegmentedButton = mdc.segmentedButton.MDCSegmentedButton;
+      const MDCSelect = mdc.select.MDCSelect;
+      const MDCSlider = mdc.slider.MDCSlider;
+      const MDCSnackbar = mdc.snackbar.MDCSnackbar;
+      const MDCSwitch = mdc.switchControl.MDCSwitch;
+      const MDCTabBar = mdc.tabBar.MDCTabBar;
+      const MDCTextField = mdc.textField.MDCTextField;
+      const MDCTooltip = mdc.tooltip.MDCTooltip;
+      const MDCTopAppBar = mdc.topAppBar.MDCTopAppBar;
+    </script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        background-image: url(minimalist-forest-rust-art-69cv6v3w9wpwmsws.jpg);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        width: 100vw;
+        margin: 1%;
+        background-attachment: fixed;
+        overflow-x: hidden;
+      }
+      .hidden {
+        display: none;
+      }
+
+      .sheet-out-of-view {
+        margin-left: -100%;
+      }
+
+      .sheet {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(40, 20, 20, 0.95);
+        color: white;
+        z-index: 1000;
+        transition: transform 0.3s ease-in-out;
+        transform: translateY(100%);
+      }
+
+      .sheet:not(.sheet-out-of-view) {
+        transform: translateY(0);
+      }
+
+      .sheet main {
+        min-height: calc(100vh - 56px - 48px);
+        margin-top: 56px;
+        padding: 20px;
+      }
+
+      .sheet__content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .sheet__content h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #fff;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 10px;
+      }
+
+      .sheet__content p {
+        font-size: 16px;
+        margin: 10px 0;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .sheet__content strong {
+        color: #fff;
+        margin-right: 10px;
+      }
+
+      .mdc-top-app-bar {
+        background-color: rgba(80, 40, 40, 0.95);
+      }
+
+      .mdc-top-app-bar__title {
+        color: white;
+      }
+
+      .mdc-icon-button {
+        color: white !important;
+      }
+
+      .table-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 32px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
+      }
+
+      table.dynamic-table {
+        width: 100%;
+        margin: 0 auto;
+        border-collapse: collapse;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background: rgba(40, 20, 20, 0.9);
+        color: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        font-size: 14px;
+      }
+
+      table.dynamic-table th,
+      table.dynamic-table td {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 16px 20px;
+        text-align: left;
+        vertical-align: middle;
+        line-height: 1.4;
+        min-height: 48px;
+      }
+
+      table.dynamic-table th {
+        background: rgba(80, 40, 40, 0.95);
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: #ffffff;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      table.dynamic-table td {
+        background: rgba(60, 30, 30, 0.8);
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      table.dynamic-table tr:hover {
+        background-color: rgba(255, 255, 255, 0.12);
+      }
+
+      table.dynamic-table tbody tr:last-child td {
+        cursor: default;
+      }
+
+      table.dynamic-table tbody tr:last-child td:hover {
+        background-color: rgba(100, 50, 50, 0.95);
+      }
+
+      table.dynamic-table tr.selected {
+        background-color: #d0ebff !important;
+        color: #222;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        table.dynamic-table {
+          width: 95vw;
+          font-size: 12px;
+        }
+
+        table.dynamic-table th,
+        table.dynamic-table td {
+          padding: 12px 8px;
+        }
+
+        table.dynamic-table th {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <table>
+        <tr></tr>
+      </table>
+    </main>
+
+    <!-- Dynamische Tabel -->
+    <div class="table-container">
+      <table id="dataTable" class="dynamic-table">
+        <thead>
+          <tr>
+            <th style="border: none">
+              <button
+                onclick="window.location.href = sessionStorage.getItem('LastPage')"
+                class="mdc-button mdc-button--raised"
+              >
+                <span class="mdc-button__label">Terug</span>
+              </button>
+            </th>
+            <th style="border: none"></th>
+            <th style="border: none"></th>
+            <th style="border: none"></th>
+          </tr>
+          <tr>
+            <th>Aantal</th>
+            <th>Prefab Naam</th>
+            <th>Kwaliteit</th>
+            <th>Totale Kosten</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dynamische rijen komen hier -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Back Button -->
+
+    <!-- sheet -->
+    <section class="sheet sheet-out-of-view">
+      <header class="mdc-top-app-bar">
+        <div class="mdc-top-app-bar__row">
+          <section
+            class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start"
+          >
+            <button
+              class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
+              aria-label="Sluiten"
+              onclick="closeSheet()"
+            >
+              close
+            </button>
+            <span class="mdc-top-app-bar__title">Component Details</span>
+          </section>
+          <section
+            class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end"
+            role="toolbar"
+          >
+            <button
+              class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+              aria-label="Delen"
+            >
+              share
+            </button>
+            <button
+              class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+              aria-label="Instellingen"
+            >
+              settings
+            </button>
+          </section>
+        </div>
+      </header>
+
+      <main class="sheet__main">
+        <div class="sheet__content" style="padding: 20px">
+          <h2 id="sheetComponentName"></h2>
+          <div
+            style="
+              margin-top: 20px;
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              gap: 20px;
+            "
+          >
+            <div>
+              <p>
+                <strong>Aantal:</strong> <span id="sheetComponentAmount"></span>
+              </p>
+              <p>
+                <strong>Kwaliteit:</strong>
+                <span id="sheetComponentGrade"></span>
+              </p>
+              <p>
+                <strong>Materiaal Type:</strong>
+                <span id="sheetComponentMaterial"></span>
+              </p>
+            </div>
+            <div>
+              <p>
+                <strong>Component Type:</strong>
+                <span id="sheetComponentType"></span>
+              </p>
+              <p>
+                <strong>Kosten per Stuk:</strong>
+                <span id="sheetComponentCostPerPiece"></span>
+              </p>
+              <p>
+                <strong>Totale Kosten:</strong>
+                <span id="sheetComponentCost"></span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </section>
+
+    <script src="components.js"></script>
+    <script src="componentsLogic.js"></script>
+    <script>
+      let totaalKostenWantIkMoetDitDoen = 0;
+
+      //Dit zijn de koste van alle prefabs. Hiermee doe ik rekenen met de totaal koste en de inviduele koste
+      const buildingCosts = {
+        //dis is bijvoorbeeld de kosten van alle twig prefabs
+        Twig: {
+          foundation: 50,
+          "foundation.triangle": 25,
+          "foundation.steps": 25,
+          floor: 25,
+          "floor.triangle": 13,
+          "floor.frame": 25,
+          wall: 50,
+          "wall.half": 50,
+          "wall.low": 25,
+          "wall.doorway": 35,
+          "wall.window": 35,
+          "wall.frame": 25,
+          roof: 50,
+          "roof.triangle": 25,
+          ramp: 25,
+          stairs: 50,
+        },
+        Wood: {
+          foundation: 200,
+          "foundation.triangle": 100,
+          "foundation.steps": 100,
+          floor: 100,
+          "floor.triangle": 50,
+          "floor.frame": 100,
+          wall: 200,
+          "wall.half": 200,
+          "wall.low": 100,
+          "wall.doorway": 140,
+          "wall.window": 140,
+          "wall.frame": 100,
+          roof: 200,
+          "roof.triangle": 100,
+          ramp: 100,
+          stairs: 200,
+        },
+        Stone: {
+          foundation: 300,
+          "foundation.triangle": 150,
+          "foundation.steps": 150,
+          floor: 150,
+          "floor.triangle": 75,
+          "floor.frame": 150,
+          wall: 300,
+          "wall.half": 300,
+          "wall.low": 150,
+          "wall.doorway": 210,
+          "wall.window": 210,
+          "wall.frame": 150,
+          roof: 300,
+          "roof.triangle": 150,
+          ramp: 150,
+          stairs: 300,
+        },
+        "Sheet Metal": {
+          foundation: 200,
+          "foundation.triangle": 100,
+          "foundation.steps": 200,
+          floor: 100,
+          "floor.triangle": 50,
+          "floor.frame": 100,
+          wall: 200,
+          "wall.half": 200,
+          "wall.low": 100,
+          "wall.doorway": 140,
+          "wall.window": 140,
+          "wall.frame": 100,
+          roof: 200,
+          "roof.triangle": 100,
+          ramp: 100,
+          stairs: 200,
+        },
+        Armored: {
+          foundation: 25,
+          "foundation.triangle": 13,
+          "foundation.steps": 25,
+          floor: 13,
+          "floor.triangle": 7,
+          "floor.frame": 13,
+          wall: 25,
+          "wall.half": 25,
+          "wall.low": 13,
+          "wall.doorway": 18,
+          "wall.window": 18,
+          "wall.frame": 13,
+          roof: 25,
+          "roof.triangle": 13,
+          ramp: 13,
+          stairs: 25,
+        },
+      };
+
+      //een nieuwe rij wordt aangemaakt
+      let row = document.createElement("tr");
+      //Dit zijn alle functies die worden gebruikt voor het openen van de sheet
+      function openSheet(componentName, amount, grade, cost) {
+        const sheet = document.querySelector(".sheet");
+        sheet.classList.remove("sheet-out-of-view");
+
+        window.scrollTo({ top: 0 });
+        document.body.style.overflowY = "hidden";
+
+        history.pushState({ sheetOpen: true }, null, "#sheet-open");
+
+        document.getElementById("dataTable").classList.add("hidden");
+
+        // Calculate cost per piece
+        const costPerPiece = Math.floor(cost / amount);
+
+        // Get material type based on grade
+        const gradeToMaterial = {
+          0: "Twijg",
+          1: "Hout",
+          2: "Steen",
+          3: "Metalen Plaat",
+          4: "Gepantserd",
+        };
+        const materialType = gradeToMaterial[grade] || "Onbekend";
+
+        // Get component type (everything before the first dot)
+        const componentType = componentName.split(".")[0];
+
+        // Update sheet content
+        document.getElementById("sheetComponentName").textContent =
+          componentName;
+        document.getElementById("sheetComponentAmount").textContent = amount;
+        document.getElementById("sheetComponentGrade").textContent = grade;
+        document.getElementById("sheetComponentCost").textContent =
+          cost === 0 ? "Onbekende prefab/kosten" : cost;
+        document.getElementById("sheetComponentCostPerPiece").textContent =
+          cost === 0 ? "Onbekende prefab/kosten" : costPerPiece;
+        document.getElementById("sheetComponentMaterial").textContent =
+          materialType;
+        document.getElementById("sheetComponentType").textContent =
+          componentType;
+      }
+
+      //Dit zijn alle functies die worden gebruikt voor het sluiten van de sheet
+      function closeSheet() {
+        const sheet = document.querySelector(".sheet");
+        sheet.classList.add("sheet-out-of-view");
+        document.body.style.overflowY = "auto";
+        document.getElementById("dataTable").classList.remove("hidden");
+        document.getElementById("backButton").classList.remove("hidden");
+
+        history.back();
+      }
+
+      // Dynamische data (dit kan ook uit een API komen)
+      const json = sessionStorage.getItem("Base");
+      const jsonParsed = JSON.parse(json);
+      const tbody = document.getElementById("dataTable");
+
+      //array wordt [aantal,name,grade]
+      let buildingCoreEntitiesCountArray = [];
+      let buildingCoreEntitiesNameArray = [];
+      let buildingCoreEntitiesGradeArray = [];
+
+      //loop door alle JSON prefabname entiteiten
+      for (const prefabname in jsonParsed) {
+        //Maak een nieuwe array met alleen de prefabnamen
+        const arr = jsonParsed[prefabname];
+
+        //Loop door alle prefabnamen array
+        if (Array.isArray(arr)) {
+          arr.forEach((entities) => {
+            //Check if prefabname contains building core
+            if (
+              entities.prefabname &&
+              entities.prefabname.includes("assets/prefabs/building core/")
+            ) {
+              //Acties voor eerste item in de array
+              if (buildingCoreEntitiesNameArray.length == 0) {
+                buildingCoreEntitiesCountArray = [1];
+                buildingCoreEntitiesNameArray = [entities.prefabname];
+                buildingCoreEntitiesGradeArray = [entities.grade];
+                console.log("eerste item in array aangemaakt");
+              } else {
+                var foundMatch = false;
+                //Loop door alle prefabnamen
+                for (let i = 0; i < buildingCoreEntitiesNameArray.length; i++) {
+                  //Controleer of prefabname al bestaat
+                  if (
+                    entities.prefabname == buildingCoreEntitiesNameArray[i] &&
+                    entities.grade == buildingCoreEntitiesGradeArray[i]
+                  ) {
+                    //Bij match gevonden de count met 1 ophogen
+                    buildingCoreEntitiesCountArray[i]++;
+                    foundMatch = true;
+                    break;
+                  }
+                }
+                //Controleer of match gevonden is
+                if (!foundMatch) {
+                  //Vul arrays met nieuw item
+                  buildingCoreEntitiesCountArray.push(1);
+                  buildingCoreEntitiesNameArray.push(entities.prefabname);
+                  buildingCoreEntitiesGradeArray.push(entities.grade);
+                } else {
+                  //Bij match gevonden doe niks
+                  foundMatch = false;
+                }
+              }
+            }
+          });
+        }
+      }
+
+      function berekenComponentKosten(componentNaam, kwaliteit, aantal) {
+        // Converteer kwaliteitsnummer naar materiaalnaam
+        const gradeNaarMateriaal = {
+          0: "Twig",
+          1: "Wood",
+          2: "Stone",
+          3: "Sheet Metal",
+          4: "Armored",
+        };
+
+        // Haal het juiste materiaal op basis van kwaliteit
+        const materiaalType = gradeNaarMateriaal[kwaliteit];
+
+        // Controleer of het materiaal en de kosten bestaan
+        if (!materiaalType || !buildingCosts[materiaalType]) {
+          return 0;
+        }
+
+        // Haal het basis component type uit de naam (alles voor de eerste punt)
+        const basisComponent = componentNaam.split(".")[0];
+
+        // Bereken de kosten per stuk voor dit component
+        // Als het component een specifieke variant is (met punt), gebruik die kosten
+        // Anders gebruik de basis kosten
+        let kostenPerStuk;
+        if (componentNaam.includes(".")) {
+          // Voor specifieke varianten zoals "wall.doorway" of "foundation.triangle"
+          kostenPerStuk = buildingCosts[materiaalType][componentNaam] || 0;
+        } else {
+          // Voor basis componenten zoals "wall" of "foundation"
+          kostenPerStuk = buildingCosts[materiaalType][basisComponent] || 0;
+        }
+
+        // Bereken totaal kosten (kosten per stuk * aantal)
+        const totaalKosten = kostenPerStuk * aantal;
+
+        return totaalKosten;
+      }
+
+      for (let i = 0; i < buildingCoreEntitiesNameArray.length; i++) {
+        row = document.createElement("tr");
+        const str = buildingCoreEntitiesNameArray[i];
+        const words = str.split("/");
+        const componentName = words[3];
+        const count = buildingCoreEntitiesCountArray[i];
+        const grade = buildingCoreEntitiesGradeArray[i];
+        const totalCost = berekenComponentKosten(componentName, grade, count);
+
+        totaalKostenWantIkMoetDitDoen =
+          totaalKostenWantIkMoetDitDoen + totalCost;
+
+        // Create cells individually
+        const countCell = document.createElement("td");
+        countCell.textContent = count;
+        countCell.addEventListener("click", function () {
+          openSheet(componentName, count, grade, totalCost);
+        });
+
+        const nameCell = document.createElement("td");
+        nameCell.textContent = componentName;
+        nameCell.addEventListener("click", function () {
+          openSheet(componentName, count, grade, totalCost);
+        });
+
+        const gradeCell = document.createElement("td");
+        gradeCell.textContent = grade;
+        gradeCell.addEventListener("click", function () {
+          openSheet(componentName, count, grade, totalCost);
+        });
+
+        const costCell = document.createElement("td");
+        costCell.textContent = totalCost;
+        costCell.addEventListener("click", function () {
+          openSheet(componentName, count, grade, totalCost);
+        });
+
+        // Append cells to row
+        row.appendChild(countCell);
+        row.appendChild(nameCell);
+        row.appendChild(gradeCell);
+        row.appendChild(costCell);
+
+        tbody.appendChild(row);
+      }
+
+      // Create total row
+      row = document.createElement("tr");
+      const emptyCell = document.createElement("td");
+      const totalLabelCell = document.createElement("td");
+      totalLabelCell.textContent = "Totaal";
+      const emptyCell2 = document.createElement("td");
+      const totalCostCell = document.createElement("td");
+      totalCostCell.textContent = totaalKostenWantIkMoetDitDoen;
+
+      row.appendChild(emptyCell);
+      row.appendChild(totalLabelCell);
+      row.appendChild(emptyCell2);
+      row.appendChild(totalCostCell);
+      tbody.appendChild(row);
+    </script>
+    <script src="service-worker.js"></script>
+  </body>
+</html>

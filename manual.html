@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <meta name="description" content="Sanc Base Calculator" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icon512_rounded.png"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"
+    />
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    />
+
+    <link rel="manifest" href="manifest.json" />
+
+    <script>
+      const MDCBanner = mdc.banner.MDCBanner;
+      const MDCCheckbox = mdc.checkbox.MDCCheckbox;
+      const MDCChip = mdc.chips.MDCChip;
+      const MDCChipSet = mdc.chips.MDCChipSet;
+      const MDCCircularProgress = mdc.circularProgress.MDCCircularProgress;
+      const MDCDataTable = mdc.dataTable.MDCDataTable;
+      const MDCDialog = mdc.dialog.MDCDialog;
+      const MDCDrawer = mdc.drawer.MDCDrawer;
+      const MDCFloatingLabel = mdc.floatingLabel.MDCFloatingLabel;
+      const MDCFormField = mdc.formField.MDCFormField;
+      const MDCIconButtonToggle = mdc.iconButton.MDCIconButtonToggle;
+      const MDCLineRipple = mdc.lineRipple.MDCLineRipple;
+      const MDCLinearProgress = mdc.linearProgress.MDCLinearProgress;
+      const MDCList = mdc.list.MDCList;
+      const MDCMenu = mdc.menu.MDCMenu;
+      const MDCMenuSurface = mdc.menuSurface.MDCMenuSurface;
+      const MDCNotchedOutline = mdc.notchedOutline.MDCNotchedOutline;
+      const MDCRadio = mdc.radio.MDCRadio;
+      const MDCRipple = mdc.ripple.MDCRipple;
+      const MDCSegmentedButton = mdc.segmentedButton.MDCSegmentedButton;
+      const MDCSelect = mdc.select.MDCSelect;
+      const MDCSlider = mdc.slider.MDCSlider;
+      const MDCSnackbar = mdc.snackbar.MDCSnackbar;
+      const MDCSwitch = mdc.switchControl.MDCSwitch;
+      const MDCTabBar = mdc.tabBar.MDCTabBar;
+      const MDCTextField = mdc.textField.MDCTextField;
+      const MDCTooltip = mdc.tooltip.MDCTooltip;
+      const MDCTopAppBar = mdc.topAppBar.MDCTopAppBar;
+    </script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+      button {
+        margin: 10px;
+      }
+
+      .mdc-drawer--open {
+        display: block;
+      }
+
+      main {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .container {
+        display: flex;
+        justify-content: flex-end;
+        padding: 3em;
+        flex-direction: column;
+        width: 100vw;
+      }
+
+      .mdc-text-field {
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        font-family: "Roboto", sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        margin-top: 2rem;
+        text-align: center;
+      }
+
+      body {
+        background-image: url(minimalist-forest-rust-art-69cv6v3w9wpwmsws.jpg);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        width: 100vw;
+      }
+      .loadButton {
+        background-color: gray !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Main content -->
+    <!-- <h1>rust base material calculator</h1> -->
+    <main class="mdc-top-app-bar--fixed-adjust">
+      <h1>
+        Rust base <br />
+        material cost calculator
+      </h1>
+      <div class="container">
+        <label class="mdc-text-field mdc-text-field--filled">
+          <span class="mdc-text-field__ripple"></span>
+
+          <input
+            class="mdc-text-field__input"
+            type="file"
+            id="input"
+            accept="application/json"
+            aria-labelledby="my-label-id"
+          />
+          <span class="mdc-line-ripple"></span>
+        </label>
+        <button
+          onclick="loadManualJson()"
+          class="mdc-button mdc-button--raised manual loadButton"
+        >
+          <span class="mdc-button__label">Bestand laden</span>
+        </button>
+        <button
+          onclick="backToSplitScreen()"
+          class="mdc-button mdc-button--raised"
+        >
+          <span class="mdc-button__label">Back</span>
+        </button>
+      </div>
+      <!-- code input field -->
+      <!-- Load button -->
+    </main>
+
+    <script src="components.js"></script>
+    <script src="componentsLogic.js"></script>
+    <script>
+      const buttonLoadManual = document.querySelector(".manual");
+      const fileInput = document.querySelector('input[type="file"]');
+      fileInput.addEventListener("change", (event) =>
+        changeButtonColorOnFileSelected()
+      );
+
+      function backToSplitScreen() {
+        // Clear the file input
+        fileInput.value = "";
+        // Reset the button color
+        buttonLoadManual.classList.add("loadButton");
+        // Navigate back
+        window.location.href = "splitscreen.html";
+      }
+
+      function loadManualJson() {
+        try {
+          //fileInput is mijn file picker. Controleer of bestand is geselecteerd
+          if (fileInput.files.length === 0) {
+            //geen bestand gelesecteerd
+            alert("Selecteer eerst een bestand.");
+            return;
+          } else {
+            //defenieer file reader om bestand te kunnen uitlezen
+            const reader = new FileReader();
+
+            //try catch voor mogelijke problemen bij uitlezen json
+            try {
+              //event waneer bestand is geladen
+              reader.onload = function (e) {
+                try {
+                  //jsonData is constante met verwerkte json
+                  const jsonData = JSON.parse(e.target.result);
+                  // Store the JSON data in sessionStorage
+                  sessionStorage.setItem("Base", JSON.stringify(jsonData));
+                  sessionStorage.setItem("LastPage", "manual.html");
+                  // Redirect to component view
+                  window.location.href = "componentView.html";
+                } catch (parseError) {
+                  if (parseError instanceof SyntaxError) {
+                    alert(
+                      "Ongeldig JSON bestand. Controleer of het bestand correct is geformatteerd."
+                    );
+                  } else {
+                    alert(
+                      `Onverwachte fout bij het verwerken van het bestand: ${parseError.message}`
+                    );
+                  }
+                  console.error("JSON Parse Error:", parseError);
+                }
+              };
+              //hier gaat de file reader het bestand uitlezen als text
+              reader.readAsText(fileInput.files[0]);
+            } catch (err) {
+              if (err.name === "NotReadableError") {
+                alert(
+                  "Kan het bestand niet lezen. Controleer of het bestand niet beschadigd is."
+                );
+              } else if (err.name === "SecurityError") {
+                alert(
+                  "Toegang tot het bestand geweigerd. Controleer de bestandsrechten."
+                );
+              } else {
+                alert(
+                  `Onverwachte fout bij het verwerken van het bestand: ${err.message}`
+                );
+              }
+              console.error("File Read Error:", err);
+            }
+          }
+        } catch (error) {
+          alert(`Er is een fout opgetreden: ${error.message}`);
+          console.error("General Error:", error);
+        }
+      }
+
+      function changeButtonColorOnFileSelected() {
+        if (fileInput.files.length > 0) {
+          buttonLoadManual.classList.remove("loadButton");
+        } else {
+          buttonLoadManual.classList.add("loadButton");
+        }
+      }
+    </script>
+  </body>
+</html>

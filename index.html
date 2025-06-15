@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <meta name="description" content="Sanc Base Calculator" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="icon512_rounded.png"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"
+    />
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    />
+
+    <link rel="manifest" href="manifest.json" />
+
+    <script>
+      const MDCBanner = mdc.banner.MDCBanner;
+      const MDCCheckbox = mdc.checkbox.MDCCheckbox;
+      const MDCChip = mdc.chips.MDCChip;
+      const MDCChipSet = mdc.chips.MDCChipSet;
+      const MDCCircularProgress = mdc.circularProgress.MDCCircularProgress;
+      const MDCDataTable = mdc.dataTable.MDCDataTable;
+      const MDCDialog = mdc.dialog.MDCDialog;
+      const MDCDrawer = mdc.drawer.MDCDrawer;
+      const MDCFloatingLabel = mdc.floatingLabel.MDCFloatingLabel;
+      const MDCFormField = mdc.formField.MDCFormField;
+      const MDCIconButtonToggle = mdc.iconButton.MDCIconButtonToggle;
+      const MDCLineRipple = mdc.lineRipple.MDCLineRipple;
+      const MDCLinearProgress = mdc.linearProgress.MDCLinearProgress;
+      const MDCList = mdc.list.MDCList;
+      const MDCMenu = mdc.menu.MDCMenu;
+      const MDCMenuSurface = mdc.menuSurface.MDCMenuSurface;
+      const MDCNotchedOutline = mdc.notchedOutline.MDCNotchedOutline;
+      const MDCRadio = mdc.radio.MDCRadio;
+      const MDCRipple = mdc.ripple.MDCRipple;
+      const MDCSegmentedButton = mdc.segmentedButton.MDCSegmentedButton;
+      const MDCSelect = mdc.select.MDCSelect;
+      const MDCSlider = mdc.slider.MDCSlider;
+      const MDCSnackbar = mdc.snackbar.MDCSnackbar;
+      const MDCSwitch = mdc.switchControl.MDCSwitch;
+      const MDCTabBar = mdc.tabBar.MDCTabBar;
+      const MDCTextField = mdc.textField.MDCTextField;
+      const MDCTooltip = mdc.tooltip.MDCTooltip;
+      const MDCTopAppBar = mdc.topAppBar.MDCTopAppBar;
+    </script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      .mdc-drawer--open {
+        display: block;
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        padding: 16px;
+      }
+      body {
+        background-image: url(minimalist-forest-rust-art-69cv6v3w9wpwmsws.jpg);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        width: 100vw;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Top bar -->
+    <header class="mdc-top-app-bar">
+      <div class="mdc-top-app-bar__row">
+        <section
+          class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start"
+        >
+          <button
+            class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button SideMenuButton"
+            aria-label="Open navigation menu"
+          >
+            menu
+          </button>
+          <span class="mdc-top-app-bar__title">Sanc Base Calculator</span>
+        </section>
+        <section
+          class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end"
+          role="toolbar"
+        >
+          <button
+            class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+            aria-label="Favorite"
+          >
+            favorite
+          </button>
+          <button
+            class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+            aria-label="Search"
+          >
+            search
+          </button>
+          <button
+            class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+            aria-label="Options"
+          >
+            more_vert
+          </button>
+        </section>
+      </div>
+    </header>
+    <!-- Side bar -->
+    <aside class="mdc-drawer mdc-drawer--modal">
+      <div class="mdc-drawer__content">
+        <nav class="mdc-list">
+          <a
+            class="mdc-list-item mdc-list-item--activated"
+            href="base-code.html"
+            aria-current="page"
+            tabindex="0"
+          >
+            <span class="mdc-list-item__ripple"></span>
+            <i class="material-icons mdc-list-item__graphic" aria-hidden="true"
+              >inbox</i
+            >
+            <span class="mdc-list-item__text">Cost</span>
+          </a>
+          <a class="mdc-list-item" href="component-view.html">
+            <span class="mdc-list-item__ripple"></span>
+            <i class="material-icons mdc-list-item__graphic" aria-hidden="true"
+              >send</i
+            >
+            <span class="mdc-list-item__text">Deployable count</span>
+          </a>
+        </nav>
+      </div>
+    </aside>
+    <div class="mdc-drawer-scrim"></div>
+    <!-- Main content -->
+    <main class="mdc-top-app-bar--fixed-adjust">
+      <!-- code input field -->
+      <label class="mdc-text-field mdc-text-field--filled">
+        <span class="mdc-text-field__ripple"></span>
+        <span class="mdc-floating-label" id="my-label-id">Base code</span>
+        <input
+          class="mdc-text-field__input"
+          type="text"
+          aria-labelledby="my-label-id"
+          maxlength="6"
+        />
+        <span class="mdc-line-ripple"></span>
+        <div class="mdc-text-field-character-counter">0 / 6</div>
+      </label>
+      <!-- Load button -->
+      <button class="mdc-button mdc-button--raised">
+        <span class="mdc-button__label">Load Base code</span>
+      </button>
+
+      <div class="mdc-text-field-helper-line"></div>
+    </main>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/componentsLogic.js"></script>
+    <script src="../js/service-worker.js"></script>
+  </body>
+</html>

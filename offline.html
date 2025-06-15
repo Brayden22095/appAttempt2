@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Offline - Rust Base Calculator</title>
+
+    <meta name="description" content="Sanc Base Calculator" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icon512_rounded.png"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"
+    />
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        background-image: url(minimalist-forest-rust-art-69cv6v3w9wpwmsws.jpg);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .offline-container {
+        background: rgba(40, 20, 20, 0.95);
+        padding: 40px;
+        border-radius: 12px;
+        max-width: 600px;
+        width: 90%;
+      }
+
+      h1 {
+        font-family: "Roboto", sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        line-height: 1.6;
+      }
+
+      .material-icons {
+        font-size: 64px;
+        margin-bottom: 20px;
+      }
+
+      .mdc-button {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="offline-container">
+      <i class="material-icons">wifi_off</i>
+      <h1>Je bent offline</h1>
+      <p>
+        Het lijkt erop dat je geen internetverbinding hebt. Controleer je
+        verbinding en probeer het opnieuw.
+      </p>
+      <button
+        onclick="window.location.reload()"
+        class="mdc-button mdc-button--raised"
+      >
+        <span class="mdc-button__label">Vernieuwen</span>
+      </button>
+    </div>
+  </body>
+</html>

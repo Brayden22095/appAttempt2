@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <meta name="description" content="Sanc Base Calculator" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="icon512_rounded.png"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"
+    />
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    />
+
+    <link rel="manifest" href="manifest.json" />
+
+    <script>
+      const MDCBanner = mdc.banner.MDCBanner;
+      const MDCCheckbox = mdc.checkbox.MDCCheckbox;
+      const MDCChip = mdc.chips.MDCChip;
+      const MDCChipSet = mdc.chips.MDCChipSet;
+      const MDCCircularProgress = mdc.circularProgress.MDCCircularProgress;
+      const MDCDataTable = mdc.dataTable.MDCDataTable;
+      const MDCDialog = mdc.dialog.MDCDialog;
+      const MDCDrawer = mdc.drawer.MDCDrawer;
+      const MDCFloatingLabel = mdc.floatingLabel.MDCFloatingLabel;
+      const MDCFormField = mdc.formField.MDCFormField;
+      const MDCIconButtonToggle = mdc.iconButton.MDCIconButtonToggle;
+      const MDCLineRipple = mdc.lineRipple.MDCLineRipple;
+      const MDCLinearProgress = mdc.linearProgress.MDCLinearProgress;
+      const MDCList = mdc.list.MDCList;
+      const MDCMenu = mdc.menu.MDCMenu;
+      const MDCMenuSurface = mdc.menuSurface.MDCMenuSurface;
+      const MDCNotchedOutline = mdc.notchedOutline.MDCNotchedOutline;
+      const MDCRadio = mdc.radio.MDCRadio;
+      const MDCRipple = mdc.ripple.MDCRipple;
+      const MDCSegmentedButton = mdc.segmentedButton.MDCSegmentedButton;
+      const MDCSelect = mdc.select.MDCSelect;
+      const MDCSlider = mdc.slider.MDCSlider;
+      const MDCSnackbar = mdc.snackbar.MDCSnackbar;
+      const MDCSwitch = mdc.switchControl.MDCSwitch;
+      const MDCTabBar = mdc.tabBar.MDCTabBar;
+      const MDCTextField = mdc.textField.MDCTextField;
+      const MDCTooltip = mdc.tooltip.MDCTooltip;
+      const MDCTopAppBar = mdc.topAppBar.MDCTopAppBar;
+    </script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      .mdc-drawer--open {
+        display: block;
+      }
+
+      main {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      h1 {
+        font-family: "Roboto", sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        margin-top: 2rem;
+        text-align: center;
+      }
+      .container {
+        display: flex;
+        gap: 1em;
+        justify-content: flex-end;
+        padding: 3em;
+        flex-direction: column;
+        width: 100vw;
+      }
+
+      body {
+        background-image: url(minimalist-forest-rust-art-69cv6v3w9wpwmsws.jpg);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        width: 100vw;
+      }
+      .loadButton {
+        background-color: gray !important;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Main content -->
+
+    <main class="mdc-top-app-bar--fixed-adjust">
+      <h1>
+        Rust base <br />
+        material cost calculator
+      </h1>
+      <div class="container">
+        <label class="mdc-text-field mdc-text-field--filled">
+          <span class="mdc-text-field__ripple"></span>
+          <span class="mdc-floating-label" id="my-label-id"
+            >Voer Base Code in</span
+          >
+          <input
+            class="mdc-text-field__input"
+            type="text"
+            aria-labelledby="my-label-id"
+            maxlength="6"
+          />
+          <span class="mdc-line-ripple"></span>
+          <div class="mdc-text-field-character-counter" id="counter">0 / 6</div>
+        </label>
+        <div class="mdc-text-field-helper-line"></div>
+        <!-- Load button -->
+        <button
+          class="mdc-button mdc-button--raised manual loadButton"
+          onclick="fetchBaseCode()"
+        >
+          <span class="mdc-button__label">Base Code Laden</span>
+        </button>
+        <button
+          onclick="backToSplitScreen()"
+          class="mdc-button mdc-button--raised"
+        >
+          <span class="mdc-button__label">Terug</span>
+        </button>
+      </div>
+      <div class="mdc-text-field-helper-line"></div>
+    </main>
+
+    <script src="components.js"></script>
+    <script src="componentsLogic.js"></script>
+    <script>
+      //var voor de style change button
+      const buttonLoadManual = document.querySelector(".manual");
+      const textInput = document.querySelector(".mdc-text-field__input");
+      const textInputLabel = document.getElementById("my-label-id");
+      const counter = document.getElementById("counter");
+
+      //default value for the input field
+      textInput.value = null;
+
+      textInput.addEventListener("input", function () {
+        if (textInputLabel.style.display == "none") {
+          textInputLabel.style.display = "block";
+        }
+        if (this.value.trim().length > 0) {
+          textInputLabel.style.display = "none";
+        }
+
+        if (this.value.trim().length > 5) {
+          buttonLoadManual.classList.remove("loadButton");
+        } else {
+          buttonLoadManual.classList.add("loadButton");
+        }
+
+        // Update the counter text
+        counter.textContent = `${this.value.length} / 6`;
+      });
+
+      // Add event listener for Enter key
+      textInput.addEventListener("keypress", function (event) {
+        if (event.key === "Enter" && this.value.trim().length === 6) {
+          event.preventDefault();
+          fetchBaseCode();
+        }
+      });
+
+      textInput.addEventListener("focus", function () {
+        if (document.activeElement === textInput) {
+          textInputLabel.style.display = "none";
+        } else {
+          if (textInput.value.trim().length == 0) {
+            textInputLabel.style.display = "block";
+          }
+        }
+      });
+
+      async function fetchBaseCode() {
+        try {
+          const code = document
+            .querySelector(".mdc-text-field__input")
+            .value.trim();
+          if (!code) {
+            alert("Voer een base code in.");
+            return;
+          }
+          if (code.length !== 6) {
+            alert("De base code moet exact 6 tekens lang zijn.");
+            return;
+          }
+          const corsProxy = "https://corsproxy.io/?";
+          const targetUrl = `https://builderssanctuary.com/download/fortify/${code}`;
+          const url = corsProxy + encodeURIComponent(targetUrl);
+          try {
+            const response = await fetch(url, {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+              },
+            });
+            if (!response.ok) {
+              if (response.status === 404) {
+                alert(
+                  "Base code niet gevonden. Controleer of de code correct is."
+                );
+              } else if (response.status === 500) {
+                alert(
+                  "Server fout. Probeer het later opnieuw of neem contact op met de beheerder."
+                );
+              } else if (response.status === 400) {
+                alert(
+                  "Ongeldige base code. Controleer of de code correct is ingevoerd."
+                );
+              } else if (response.status === 403) {
+                alert(
+                  "Geen toegang tot deze base code. Mogelijk is deze privé of verlopen."
+                );
+              } else if (response.status === 429) {
+                alert(
+                  "Te veel verzoeken. Probeer het over een paar minuten opnieuw."
+                );
+              } else {
+                alert(
+                  `Server fout (${response.status}): ${
+                    response.statusText || "Onbekende fout"
+                  }`
+                );
+              }
+              return;
+            }
+            try {
+              const json = await response.json();
+              if (!json || typeof json !== "object") {
+                throw new Error("Invalid JSON structure received from server");
+              }
+              if (Object.keys(json).length === 0) {
+                throw new Error("Empty response received from server");
+              }
+              console.log("Fetched JSON:", json);
+              console.log("Fetched JSON2:", JSON.stringify(json));
+
+              try {
+                sessionStorage.setItem("Base", JSON.stringify(json));
+                sessionStorage.setItem("LastPage", "code.html");
+                window.location.href = "componentView.html";
+              } catch (storageError) {
+                console.error("Storage Error:", storageError);
+                alert(
+                  "Er ging iets mis bij het opslaan van de data. Probeer het opnieuw of gebruik een andere browser."
+                );
+                return;
+              }
+            } catch (parseError) {
+              console.error("JSON Parse Error:", parseError);
+              if (parseError instanceof SyntaxError) {
+                alert(
+                  "De server stuurde ongeldige JSON data. Probeer het later opnieuw of neem contact op met de beheerder."
+                );
+              } else if (
+                parseError.message ===
+                "Invalid JSON structure received from server"
+              ) {
+                alert(
+                  "De server stuurde ongeldige data. Probeer het later opnieuw of neem contact op met de beheerder."
+                );
+              } else if (
+                parseError.message === "Empty response received from server"
+              ) {
+                alert(
+                  "De server stuurde een lege response. Probeer het later opnieuw of neem contact op met de beheerder."
+                );
+              } else {
+                alert(
+                  `Er ging iets mis bij het verwerken van de data: ${parseError.message}`
+                );
+              }
+              return;
+            }
+          } catch (err) {
+            console.error("Network Error:", err);
+            if (
+              err.name === "TypeError" &&
+              err.message.includes("Failed to fetch")
+            ) {
+              alert(
+                "Kan geen verbinding maken met de server. Controleer je internetverbinding of probeer het later opnieuw."
+              );
+            } else if (err.name === "AbortError") {
+              alert("Het verzoek is geannuleerd. Probeer het opnieuw.");
+            } else {
+              alert(`Netwerk fout: ${err.message || "Onbekende fout"}`);
+            }
+            return;
+          }
+        } catch (e) {
+          console.error("Unexpected Error:", e);
+          alert(
+            "Er is een onverwachte fout opgetreden. Probeer het opnieuw of neem contact op met de beheerder als het probleem aanhoudt."
+          );
+        }
+      }
+      function changeButtonColorOnFileSelected() {
+        buttonLoadManual.classList.remove("loadButton");
+      }
+      function backToSplitScreen() {
+        // Clear the text input
+        textInput.value = "";
+        // Reset the button color
+        buttonLoadManual.classList.add("loadButton");
+        // Reset the counter
+        counter.textContent = "0 / 6";
+        // Show the label
+        textInputLabel.style.display = "block";
+        // Navigate back
+        window.location.href = "splitscreen.html";
+      }
+    </script>
+    <script src="service-worker.js"></script>
+  </body>
+</html>

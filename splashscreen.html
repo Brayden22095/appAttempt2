@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <meta name="description" content="Sanc Base Calculator" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="icon512_rounded.png"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"
+    />
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    />
+
+    <link rel="manifest" href="manifest.json" />
+
+    <script>
+      const MDCBanner = mdc.banner.MDCBanner;
+      const MDCCheckbox = mdc.checkbox.MDCCheckbox;
+      const MDCChip = mdc.chips.MDCChip;
+      const MDCChipSet = mdc.chips.MDCChipSet;
+      const MDCCircularProgress = mdc.circularProgress.MDCCircularProgress;
+      const MDCDataTable = mdc.dataTable.MDCDataTable;
+      const MDCDialog = mdc.dialog.MDCDialog;
+      const MDCDrawer = mdc.drawer.MDCDrawer;
+      const MDCFloatingLabel = mdc.floatingLabel.MDCFloatingLabel;
+      const MDCFormField = mdc.formField.MDCFormField;
+      const MDCIconButtonToggle = mdc.iconButton.MDCIconButtonToggle;
+      const MDCLineRipple = mdc.lineRipple.MDCLineRipple;
+      const MDCLinearProgress = mdc.linearProgress.MDCLinearProgress;
+      const MDCList = mdc.list.MDCList;
+      const MDCMenu = mdc.menu.MDCMenu;
+      const MDCMenuSurface = mdc.menuSurface.MDCMenuSurface;
+      const MDCNotchedOutline = mdc.notchedOutline.MDCNotchedOutline;
+      const MDCRadio = mdc.radio.MDCRadio;
+      const MDCRipple = mdc.ripple.MDCRipple;
+      const MDCSegmentedButton = mdc.segmentedButton.MDCSegmentedButton;
+      const MDCSelect = mdc.select.MDCSelect;
+      const MDCSlider = mdc.slider.MDCSlider;
+      const MDCSnackbar = mdc.snackbar.MDCSnackbar;
+      const MDCSwitch = mdc.switchControl.MDCSwitch;
+      const MDCTabBar = mdc.tabBar.MDCTabBar;
+      const MDCTextField = mdc.textField.MDCTextField;
+      const MDCTooltip = mdc.tooltip.MDCTooltip;
+      const MDCTopAppBar = mdc.topAppBar.MDCTopAppBar;
+    </script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      .splashscreen {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .splashimg {
+        width: 5em;
+        height: 5em;
+      }
+
+      body {
+        background-image: url(minimalist-forest-rust-art-69cv6v3w9wpwmsws.jpg);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        width: 100vw;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="splashscreen">
+      <div class="splashscreen-content">
+        <img class="splashimg" src="icon512_rounded.png" alt="" />
+      </div>
+    </div>
+    <script src="components.js"></script>
+    <script>
+      //1 seconden wachten tot je naar de index.html wordt gestuurd. dit doe je door middel van setTimeOut. dit is een functie die
+      //eerst 1s wacht en na die 1s wordt je naar de index gestuurd. dit is hoe ik een werkende splashscreen heb gemaakt.
+      setTimeout(() => {
+        window.location.href = "splitscreen.html";
+      }, 1000);
+    </script>
+    <script src="service-worker.js"></script>
+  </body>
+</html>
