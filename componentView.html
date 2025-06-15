@@ -32,6 +32,17 @@
 
     <link rel="manifest" href="manifest.json" />
 
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
     <script>
       const MDCBanner = mdc.banner.MDCBanner;
       const MDCCheckbox = mdc.checkbox.MDCCheckbox;
@@ -85,8 +96,7 @@
 
       main {
         width: 100%;
-        padding: 0;
-
+        padding: 20px;
         display: flex;
         justify-content: center;
       }
@@ -147,244 +157,137 @@
         margin-right: 10px;
       }
 
-      .mdc-top-app-bar {
-        background-color: rgba(80, 40, 40, 0.95);
-      }
-
-      .mdc-top-app-bar__title {
-        color: white;
-      }
-
-      .mdc-icon-button {
-        color: white !important;
-      }
-
       .table-container {
-        max-width: 100%;
-        column-width: auto;
-        margin: 0;
-        table-layout: auto;
-        padding: 0px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        box-sizing: border-box;
+        background: rgba(40, 20, 20, 0.9);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        width: 95%;
+        max-width: 1200px;
+        margin: 0 auto;
         overflow-x: auto;
       }
 
-      table.dynamic-table {
-        margin: 0;
-        border-collapse: collapse;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          sans-serif;
-        background: rgba(40, 20, 20, 0.9);
+      .table {
         color: #fff;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-        font-size: 14px;
-        min-width: 1000px;
+        margin-bottom: 0;
       }
 
-      table.dynamic-table th:nth-child(1),
-      table.dynamic-table td:nth-child(1) {
-        width: 100px;
-      }
-
-      table.dynamic-table th:nth-child(2),
-      table.dynamic-table td:nth-child(2) {
-        width: 600px;
-      }
-
-      table.dynamic-table th:nth-child(3),
-      table.dynamic-table td:nth-child(3) {
-        width: 100px;
-      }
-
-      table.dynamic-table th:nth-child(4),
-      table.dynamic-table td:nth-child(4) {
-        width: 200px;
-      }
-
-      table.dynamic-table th,
-      table.dynamic-table td {
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        text-align: left;
-        vertical-align: middle;
-        line-height: 1.2;
-        min-height: 40px;
-      }
-
-      table.dynamic-table th {
+      .table th {
         background: rgba(80, 40, 40, 0.95);
-        font-size: 14px;
+        color: #fff;
         font-weight: 600;
-        letter-spacing: 0.3px;
         text-transform: uppercase;
-        color: #ffffff;
-        position: sticky;
-        top: 0;
-        z-index: 10;
+        letter-spacing: 0.3px;
+        border-color: rgba(255, 255, 255, 0.1);
       }
 
-      table.dynamic-table td {
+      .table td {
         background: rgba(60, 30, 30, 0.8);
-        font-size: 13px;
-        font-weight: 500;
+        border-color: rgba(255, 255, 255, 0.1);
+        vertical-align: middle;
         cursor: pointer;
-        transition: background-color 0.2s ease;
       }
 
-      table.dynamic-table tr:hover {
+      .table tbody tr:hover {
         background-color: rgba(255, 255, 255, 0.12);
       }
 
-      table.dynamic-table tbody tr:last-child td {
+      .table tbody tr:last-child td {
+        background: rgba(100, 50, 50, 0.95);
+        font-weight: 600;
         cursor: default;
       }
 
-      table.dynamic-table tbody tr:last-child td:hover {
-        background-color: rgba(100, 50, 50, 0.95);
+      .btn-back {
+        background-color: #8b4513;
+        color: #fff;
+        border: none;
       }
 
-      table.dynamic-table tr.selected {
-        background-color: #d0ebff !important;
-        color: #222;
+      .btn-back:hover {
+        background-color: #6b3410;
+        color: #fff;
       }
 
-      table {
-        table-layout: auto;
-        width: 95%;
-      }
-      /* Responsive adjustments */
       @media (max-width: 768px) {
         .table-container {
-          padding: 4px;
-          width: calc(100vw - 2em); /* Subtract 2em (1em from each side) */
-          margin: 0 1em;
-          overflow-x: auto;
+          width: 95%;
+          padding: 10px;
         }
 
-        table.dynamic-table {
-          width: 100%;
-          font-size: 11px;
-          min-width: 400px;
-        }
-
-        table.dynamic-table th,
-        table.dynamic-table td {
-          padding: 6px 8px;
-          white-space: nowrap;
-          min-width: 80px;
-        }
-
-        table.dynamic-table th {
-          font-size: 12px;
-          position: sticky;
-          top: 0;
-          z-index: 10;
-        }
-
-        main {
-          margin: 0;
-          padding: 0;
-          width: 100%;
-        }
-
-        body {
-          overflow-x: hidden;
+        .table th,
+        .table td {
+          padding: 8px;
+          font-size: 14px;
         }
       }
     </style>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   </head>
 
   <body>
     <main>
-      <table>
-        <tr></tr>
-      </table>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width: 100px">
+                <button
+                  onclick="window.location.href = sessionStorage.getItem('LastPage')"
+                  class="btn btn-back"
+                >
+                  <i class="bi bi-arrow-left"></i> Terug
+                </button>
+              </th>
+              <th style="width: 600px"></th>
+              <th style="width: 100px"></th>
+              <th style="width: 200px"></th>
+            </tr>
+            <tr>
+              <th>Aantal</th>
+              <th>Naam</th>
+              <th>Kwaliteit</th>
+              <th>Kosten</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dynamische rijen komen hier -->
+          </tbody>
+        </table>
+      </div>
     </main>
 
-    <!-- Dynamische Tabel -->
-    <div class="table-container">
-      <table id="dataTable" class="dynamic-table">
-        <thead>
-          <tr>
-            <th style="border: none">
-              <button
-                onclick="window.location.href = sessionStorage.getItem('LastPage')"
-                class="mdc-button mdc-button--raised"
-              >
-                <span class="mdc-button__label">Terug</span>
-              </button>
-            </th>
-            <th style="border: none"></th>
-            <th style="border: none"></th>
-            <th style="border: none"></th>
-          </tr>
-          <tr>
-            <th>Aantal</th>
-            <th>Naam</th>
-            <th>Kwaliteit</th>
-            <th>Kosten</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Dynamische rijen komen hier -->
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Back Button -->
-
-    <!-- sheet -->
+    <!-- Sheet -->
     <section class="sheet sheet-out-of-view">
-      <header class="mdc-top-app-bar">
-        <div class="mdc-top-app-bar__row">
-          <section
-            class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start"
+      <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+          <button
+            class="btn btn-link text-light"
+            aria-label="Sluiten"
+            onclick="closeSheet()"
           >
-            <button
-              class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
-              aria-label="Sluiten"
-              onclick="closeSheet()"
-            >
-              close
+            <i class="bi bi-x-lg"></i>
+          </button>
+          <span class="navbar-brand mb-0 h1">Component Details</span>
+          <div>
+            <button class="btn btn-link text-light" aria-label="Delen">
+              <i class="bi bi-share"></i>
             </button>
-            <span class="mdc-top-app-bar__title">Component Details</span>
-          </section>
-          <section
-            class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end"
-            role="toolbar"
-          >
-            <button
-              class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-              aria-label="Delen"
-            >
-              share
+            <button class="btn btn-link text-light" aria-label="Instellingen">
+              <i class="bi bi-gear"></i>
             </button>
-            <button
-              class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-              aria-label="Instellingen"
-            >
-              settings
-            </button>
-          </section>
+          </div>
         </div>
-      </header>
+      </nav>
 
       <main class="sheet__main">
-        <div class="sheet__content" style="padding: 20px">
+        <div class="sheet__content">
           <h2 id="sheetComponentName"></h2>
-          <div
-            style="
-              margin-top: 20px;
-              display: grid;
-              grid-template-columns: repeat(2, 1fr);
-              gap: 20px;
-            "
-          >
-            <div>
+          <div class="row">
+            <div class="col-md-6">
               <p>
                 <strong>Aantal:</strong> <span id="sheetComponentAmount"></span>
               </p>
@@ -397,7 +300,7 @@
                 <span id="sheetComponentMaterial"></span>
               </p>
             </div>
-            <div>
+            <div class="col-md-6">
               <p>
                 <strong>Component Type:</strong>
                 <span id="sheetComponentType"></span>
