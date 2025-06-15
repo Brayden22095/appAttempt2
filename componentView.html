@@ -86,7 +86,7 @@
       main {
         width: 100%;
         padding: 0;
-        margin: 0;
+        margin: 2%;
         display: flex;
         justify-content: center;
       }
@@ -532,6 +532,7 @@
       // Dynamische data (dit kan ook uit een API komen)
       const json = sessionStorage.getItem("Base");
       const jsonParsed = JSON.parse(json);
+      console.log("view:" + jsonParsed);
       const tbody = document.getElementById("dataTable");
 
       //array wordt [aantal,name,grade]
@@ -689,6 +690,6 @@
       row.appendChild(totalCostCell);
       tbody.appendChild(row);
     </script>
-    <script src="service-worker.js"></script>
+    <script src="sw.js"></script>
   </body>
 </html>

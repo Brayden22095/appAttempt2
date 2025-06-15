@@ -219,13 +219,14 @@
           alert("De base code moet exact 6 tekens lang zijn.");
           return;
         }
-        //const targetUrl = `http://77.168.228.92/fortify/${code}`;
-        const targetUrl = `http://builderssanctuary.com/download/fortify/abuser`;
+        const targetUrl = `http://77.168.228.92/fortify/${code}`;
+        //const targetUrl = `http://builderssanctuary.com/download/fortify/abuser`;
 
         const httpRequest = new XMLHttpRequest();
-        httpRequest.open("GET", targetUrl, true);
-        httpRequest.onload = httpRequestSuccess(httpRequest.responseText);
-        httpRequest.onerror = httpRequestError();
+        httpRequest.open("GET", targetUrl);
+        console.log("hier " + httpRequest);
+        httpRequest.onload = httpRequestSuccess;
+        httpRequest.onerror = httpRequestError;
         httpRequest.send();
       }
 
@@ -233,56 +234,23 @@
         alert("Er is iets misgegaan! Probeer opnieuw.");
       }
 
-      async function httpRequestSuccess(json) {
+      function httpRequestSuccess() {
+        const json = JSON.parse(this.responseText);
+        console.log("Fetched JSON:", json);
+        console.log("Fetched JSON2:", JSON.stringify(json));
         try {
-          alert("wouter:" + json);
-          //const json = await response.json();
-          if (!json || typeof json !== "object") {
-            throw new Error("Invalid JSON structure received from server");
-          }
-          if (Object.keys(json).length === 0) {
-            throw new Error("Empty response received from server");
-          }
-          console.log("Fetched JSON:", json);
-          console.log("Fetched JSON2:", JSON.stringify(json));
-
-          try {
-            sessionStorage.setItem("Base", JSON.stringify(json));
-            sessionStorage.setItem("LastPage", "code.html");
-            window.location.href = "componentView.html";
-          } catch (storageError) {
-            console.error("Storage Error:", storageError);
-            alert(
-              "Er ging iets mis bij het opslaan van de data. Probeer het opnieuw of gebruik een andere browser."
-            );
-            return;
-          }
-        } catch (parseError) {
-          console.error("JSON Parse Error:", parseError);
-          if (parseError instanceof SyntaxError) {
-            alert(
-              "De server stuurde ongeldige JSON data. Probeer het later opnieuw of neem contact op met de beheerder."
-            );
-          } else if (
-            parseError.message === "Invalid JSON structure received from server"
-          ) {
-            alert(
-              "De server stuurde ongeldige data. Probeer het later opnieuw of neem contact op met de beheerder."
-            );
-          } else if (
-            parseError.message === "Empty response received from server"
-          ) {
-            alert(
-              "De server stuurde een lege response. Probeer het later opnieuw of neem contact op met de beheerder."
-            );
-          } else {
-            alert(
-              `Er ging iets mis bij het verwerken van de data: ${parseError.message}`
-            );
-          }
+          sessionStorage.setItem("Base", JSON.stringify(json));
+          sessionStorage.setItem("LastPage", "code.html");
+          window.location.href = "componentView.html";
+        } catch (storageError) {
+          console.error("Storage Error:", storageError);
+          alert(
+            "Er ging iets mis bij het opslaan van de data. Probeer het opnieuw of gebruik een andere browser."
+          );
           return;
         }
       }
+
       function changeButtonColorOnFileSelected() {
         buttonLoadManual.classList.remove("loadButton");
       }
@@ -299,6 +267,6 @@
         window.location.href = "splitscreen.html";
       }
     </script>
-    <script src="service-worker.js"></script>
+    <script src="sw.js"></script>
   </body>
 </html>
