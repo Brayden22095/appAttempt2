@@ -15,249 +15,6 @@
       href="/icon512_rounded.png"
     />
 
-    <style>
-      /* Aangepaste font-familie */
-      body {
-        font-family: "Roboto", sans-serif;
-        /* De achtergrondafbeelding is hier hardcoded, zorg ervoor dat het pad correct is op je server */
-        background-image: url("minimalist-forest-rust-art-69cv6v3w9wpwmsws.jpg"); /* Placeholder afbeelding */
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        min-height: 100vh;
-      }
-
-      /* Overrides voor generieke Tailwind styling voor betere controle waar nodig */
-      .dynamic-table th,
-      .dynamic-table td {
-        cursor: pointer;
-        border-bottom: 2px solid #8b4513;
-        color: #ffffff;
-      }
-
-      .dynamic-table th {
-        color: #ffffff;
-        border-bottom: 3px solid #8b4513;
-      }
-
-      .dynamic-table tr:last-child td {
-        color: #ffffff;
-        border-bottom: none;
-      }
-
-      /* Sheet styling */
-      .sheet {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(40, 20, 20, 0.98);
-        z-index: 1000;
-        transform: translateY(0);
-        transition: transform 0.3s ease-in-out;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        color: #e8d0aa;
-      }
-
-      .sheet-out-of-view {
-        transform: translateY(100%);
-      }
-
-      .sheet__main {
-        flex: 1;
-        overflow-y: auto;
-        position: relative;
-        padding-top: 64px; /* Ruimte voor de top-app-bar */
-      }
-
-      .sheet__content {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-      }
-
-      .sheet__content h2 {
-        color: #ffd700;
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-
-      .sheet__content p {
-        margin: 1rem 0;
-        font-size: 1.1rem;
-        line-height: 1.6;
-      }
-
-      .sheet__content strong {
-        color: #ffd700;
-        font-weight: 500;
-      }
-
-      .hidden {
-        display: none;
-      }
-
-      /* Top app bar styling */
-      .mdc-top-app-bar {
-        background-color: rgba(40, 20, 20, 0.98);
-        color: #ffd700;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 2;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      }
-
-      .mdc-top-app-bar__row {
-        position: relative;
-      }
-
-      .mdc-top-app-bar__title {
-        font-size: 1.25rem;
-        font-weight: 500;
-        color: #ffd700;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-
-      .mdc-icon-button {
-        color: #ffd700;
-      }
-
-      .mdc-icon-button:hover {
-        background-color: rgba(255, 215, 0, 0.1);
-      }
-
-      /* Media Query voor kleinere schermen (bijv. mobiel) */
-      @media (max-width: 768px) {
-        .table-container {
-          padding: 10px;
-          margin: 10px;
-        }
-
-        .dynamic-table th,
-        .dynamic-table td {
-          padding: 8px;
-          font-size: 0.9rem;
-        }
-
-        .sheet__content h2 {
-          font-size: 1.5rem;
-        }
-
-        .sheet__content p {
-          font-size: 1rem;
-        }
-      }
-
-      /* Media Query voor zeer kleine schermen (bijv. smallere telefoons) */
-      @media (max-width: 480px) {
-        .dynamic-table th,
-        .dynamic-table td {
-          padding: 6px;
-          font-size: 0.8rem;
-          /* Optioneel: Maak de tabel scrollbaar als de inhoud niet past */
-          display: block; /* Zorgt ervoor dat cellen onder elkaar komen */
-          width: 100%;
-          box-sizing: border-box; /* Zorgt ervoor dat padding meegenomen wordt in de breedte */
-        }
-
-        .dynamic-table thead {
-          display: none; /* Verberg de tabelkop op kleine schermen */
-        }
-
-        .dynamic-table tr {
-          margin-bottom: 10px;
-          display: block;
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 8px;
-          padding: 10px;
-        }
-
-        .dynamic-table td {
-          text-align: right;
-          position: relative;
-          padding-left: 50%;
-        }
-
-        .dynamic-table td::before {
-          content: attr(data-label);
-          position: absolute;
-          left: 0;
-          width: 45%;
-          padding-left: 10px;
-          font-weight: bold;
-          text-align: left;
-          color: #ffd700;
-        }
-        .mdc-button {
-          padding: 6px 12px;
-          font-size: 0.9rem;
-        }
-      }
-
-      .table-container {
-        max-width: 1080px;
-        margin: 20px auto;
-        background: rgba(0, 0, 0, 0.7);
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        padding: 20px;
-      }
-
-      .dynamic-table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-
-      .dynamic-table th,
-      .dynamic-table td {
-        cursor: pointer;
-        border-bottom: 2px solid #8b4513;
-        color: #ffffff;
-        padding: 12px 15px;
-        text-align: left;
-      }
-
-      .dynamic-table th {
-        color: #ffffff;
-        border-bottom: 3px solid #8b4513;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-
-      .dynamic-table tr:hover {
-        background-color: rgba(139, 69, 19, 0.2);
-      }
-
-      .dynamic-table tr:last-child td {
-        color: #ffffff;
-        border-bottom: none;
-        font-weight: 600;
-      }
-
-      .mdc-button {
-        background-color: #8b4513;
-        color: #ffffff;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: 500;
-      }
-
-      .mdc-button:hover {
-        background-color: #6b3410;
-      }
-    </style>
-
     <link
       rel="stylesheet"
       href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"
@@ -305,6 +62,343 @@
       const MDCTooltip = mdc.tooltip.MDCTooltip;
       const MDCTopAppBar = mdc.topAppBar.MDCTopAppBar;
     </script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        background: linear-gradient(
+          135deg,
+          #2c1810 0%,
+          #1a0f0a 50%,
+          #0f0704 100%
+        );
+        background-attachment: fixed;
+        min-height: 100vh;
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Inter", sans-serif;
+      }
+
+      main {
+        width: 100%;
+        padding: 1rem;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        box-sizing: border-box;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .sheet-out-of-view {
+        margin-left: -100%;
+      }
+
+      .sheet {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(40, 20, 20, 0.98) 0%,
+          rgba(20, 10, 10, 0.98) 100%
+        );
+        backdrop-filter: blur(20px);
+        color: white;
+        z-index: 1000;
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform: translateY(100%);
+      }
+
+      .sheet:not(.sheet-out-of-view) {
+        transform: translateY(0);
+      }
+
+      .sheet main {
+        min-height: calc(100vh - 56px - 48px);
+        margin-top: 56px;
+        padding: 2rem;
+      }
+
+      .sheet__content {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .sheet__content h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: #fff;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+        padding-bottom: 0.75rem;
+        letter-spacing: -0.02em;
+      }
+
+      .sheet__content p {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin: 1rem 0;
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      .sheet__content strong {
+        color: #fff;
+        font-weight: 600;
+        margin-right: 0.5rem;
+      }
+
+      .mdc-top-app-bar {
+        background: linear-gradient(
+          135deg,
+          rgba(80, 40, 40, 0.95) 0%,
+          rgba(60, 30, 30, 0.95) 100%
+        );
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .mdc-top-app-bar__title {
+        color: white;
+        font-weight: 600;
+      }
+
+      .mdc-icon-button {
+        color: white !important;
+        transition: background-color 0.2s ease;
+      }
+
+      .mdc-icon-button:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .table-container {
+        width: 100%;
+        max-width: 1400px;
+        margin: 2rem auto;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
+        overflow-x: auto;
+      }
+
+      table.dynamic-table {
+        width: 100%;
+        margin: 0;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-family: inherit;
+        background: rgba(255, 255, 255, 0.02);
+        color: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+          0 8px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        font-size: 0.9rem;
+        min-width: 600px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      table.dynamic-table th,
+      table.dynamic-table td {
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 1rem 1.25rem;
+        text-align: left;
+        vertical-align: middle;
+        line-height: 1.4;
+        min-height: 48px;
+        position: relative;
+      }
+
+      table.dynamic-table th:last-child,
+      table.dynamic-table td:last-child {
+        border-right: none;
+      }
+
+      table.dynamic-table th {
+        background: linear-gradient(
+          135deg,
+          rgba(80, 40, 40, 0.9) 0%,
+          rgba(100, 50, 50, 0.9) 100%
+        );
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #ffffff;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      }
+
+      table.dynamic-table td {
+        background: rgba(40, 20, 20, 0.3);
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        position: relative;
+      }
+
+      table.dynamic-table tr:hover td {
+        background: rgba(80, 40, 40, 0.4);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      table.dynamic-table tbody tr:last-child td {
+        cursor: default;
+        background: linear-gradient(
+          135deg,
+          rgba(60, 30, 30, 0.6) 0%,
+          rgba(80, 40, 40, 0.6) 100%
+        );
+        font-weight: 600;
+        border-bottom: none;
+      }
+
+      table.dynamic-table tbody tr:last-child:hover td {
+        background: linear-gradient(
+          135deg,
+          rgba(100, 50, 50, 0.8) 0%,
+          rgba(120, 60, 60, 0.8) 100%
+        );
+        transform: none;
+        box-shadow: none;
+      }
+
+      table.dynamic-table tr.selected td {
+        background: linear-gradient(
+          135deg,
+          rgba(59, 130, 246, 0.3) 0%,
+          rgba(37, 99, 235, 0.3) 100%
+        ) !important;
+        color: #fff;
+        border-color: rgba(59, 130, 246, 0.4);
+      }
+
+      table.dynamic-table tbody tr:nth-child(odd) td {
+        background: rgba(40, 20, 20, 0.2);
+      }
+
+      table.dynamic-table tbody tr:nth-child(even) td {
+        background: rgba(50, 25, 25, 0.2);
+      }
+
+      table.dynamic-table tbody tr:nth-child(odd):hover td {
+        background: rgba(80, 40, 40, 0.4);
+      }
+
+      table.dynamic-table tbody tr:nth-child(even):hover td {
+        background: rgba(90, 45, 45, 0.4);
+      }
+
+      /* Add subtle animation on load */
+      table.dynamic-table {
+        animation: fadeInUp 0.6s ease-out;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Enhanced responsive design */
+      @media (max-width: 768px) {
+        body {
+          padding: 0;
+        }
+
+        main {
+          padding: 1rem;
+        }
+
+        .table-container {
+          padding: 0.5rem;
+          width: calc(100vw - 1rem);
+          margin: 0;
+          overflow-x: auto;
+        }
+
+        table.dynamic-table {
+          width: 100%;
+          font-size: 0.8rem;
+          min-width: 500px;
+          border-radius: 12px;
+        }
+
+        table.dynamic-table th,
+        table.dynamic-table td {
+          padding: 0.75rem 1rem;
+          white-space: nowrap;
+          min-width: 100px;
+        }
+
+        table.dynamic-table th {
+          font-size: 0.75rem;
+          position: sticky;
+          top: 0;
+          z-index: 10;
+        }
+
+        .sheet__content {
+          padding: 1.5rem;
+          margin: 1rem;
+        }
+
+        .sheet__content h2 {
+          font-size: 1.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        table.dynamic-table {
+          min-width: 400px;
+          font-size: 0.75rem;
+        }
+
+        table.dynamic-table th,
+        table.dynamic-table td {
+          padding: 0.5rem 0.75rem;
+          min-width: 80px;
+        }
+
+        table.dynamic-table th {
+          font-size: 0.7rem;
+        }
+      }
+    </style>
   </head>
 
   <body>
