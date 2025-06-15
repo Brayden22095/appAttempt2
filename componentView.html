@@ -203,16 +203,19 @@
       }
 
       .table-container {
+        width: 95%;
         max-width: 1200px;
         margin: 20px auto;
         background: rgba(0, 0, 0, 0.7);
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         padding: 20px;
+        overflow-x: auto;
       }
 
       .dynamic-table {
         width: 100%;
+        min-width: 600px;
         border-collapse: collapse;
       }
 
@@ -223,6 +226,7 @@
         color: #ffffff;
         padding: 12px 15px;
         text-align: left;
+        white-space: nowrap;
       }
 
       .dynamic-table th {
@@ -255,6 +259,33 @@
 
       .mdc-button:hover {
         background-color: #6b3410;
+      }
+
+      @media screen and (max-width: 768px) {
+        .table-container {
+          width: 90%;
+          padding: 10px;
+          margin: 10px auto;
+        }
+
+        .dynamic-table th,
+        .dynamic-table td {
+          padding: 8px 10px;
+          font-size: 14px;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        .table-container {
+          width: 85%;
+          padding: 5px;
+        }
+
+        .dynamic-table th,
+        .dynamic-table td {
+          padding: 6px 8px;
+          font-size: 12px;
+        }
       }
     </style>
 
