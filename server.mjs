@@ -8,7 +8,7 @@ const port = 5001;
 // Enable CORS for your domain
 app.use(
   cors({
-    origin: "https://braydenheijden.gc-webhosting.nl",
+    origin: "*",
   })
 );
 

@@ -220,10 +220,11 @@
             alert("De base code moet exact 6 tekens lang zijn.");
             return;
           }
-          const targetUrl = `77.168.228.92/${code}`;
+          const targetUrl = `http://77.168.228.92:5001/${code}`;
+          //const url = `http://192.168.2.29:5001/fortify/${code}`;
 
           try {
-            const response = await fetch(targetUrl, {
+            const response = await fetch(url, {
               method: "GET",
               headers: {
                 Accept: "application/json",
