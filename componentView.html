@@ -471,12 +471,21 @@
       function openSheet(componentName, amount, grade, cost) {
         const sheet = document.querySelector(".sheet");
         sheet.classList.remove("sheet-out-of-view");
-
+        //scrollen naar de top van de pagina
         window.scrollTo({ top: 0 });
+        //scrollen uitzetten op de y as
         document.body.style.overflowY = "hidden";
-
+        /*
         history.pushState({ sheetOpen: true }, null, "#sheet-open");
 
+        Deze regel code voegt een nieuwe entry toe aan de browser geschiedenis met een URL die eindigt op #sheet-open. Dit zorgt ervoor dat:
+         -De browser's "terug" knop de sheet kan sluiten
+         - De URL verandert om de sheet status te weerspiegelen
+         -De sheet state bewaard blijft als de pagina wordt gedeeld of gebookmarkt
+        */
+        history.pushState({ sheetOpen: true }, null, "#sheet-open");
+
+        //zorgt ervoor dat waneer mijn sheet open is dat mijn table display:none krijgt
         document.getElementById("dataTable").classList.add("hidden");
 
         // Calculate cost per piece
@@ -490,46 +499,66 @@
           3: "Metalen Plaat",
           4: "Gepantserd",
         };
+        //Dit kijkt naar of het materiaal bestaat. als het niet bestaat krijgt het de value "Onbekend"
         const materialType = gradeToMaterial[grade] || "Onbekend";
 
         // Get component type (everything before the first dot)
         const componentType = componentName.split(".")[0];
 
         // Update sheet content
+        //Componenten naam = array component name
         document.getElementById("sheetComponentName").textContent =
           componentName;
+        //component ammount is gelijk aan  amount
         document.getElementById("sheetComponentAmount").textContent = amount;
+        //component grade = grade
         document.getElementById("sheetComponentGrade").textContent = grade;
+        //cost = gelijk  koste. als koste 0 is krijg "onbekende prefab of kosten"
         document.getElementById("sheetComponentCost").textContent =
           cost === 0 ? "Onbekende prefab/kosten" : cost;
+        //koste per stuk
         document.getElementById("sheetComponentCostPerPiece").textContent =
           cost === 0 ? "Onbekende prefab/kosten" : costPerPiece;
+        //component materiaal type = grade maar naam
         document.getElementById("sheetComponentMaterial").textContent =
           materialType;
+        //prefab name
         document.getElementById("sheetComponentType").textContent =
           componentType;
       }
 
       //Dit zijn alle functies die worden gebruikt voor het sluiten van de sheet
       function closeSheet() {
+        //sheet selecteren
         const sheet = document.querySelector(".sheet");
+        //sheet out of screen maken
         sheet.classList.add("sheet-out-of-view");
+        //scroll weer aan zetten
         document.body.style.overflowY = "auto";
+        //tabel weer zichtbaar maken
         document.getElementById("dataTable").classList.remove("hidden");
+        //button ook weer zichtbaar maken eig niet meer nodig maar heb het voor de zekerheid
         document.getElementById("backButton").classList.remove("hidden");
-
+        //gaat terug naar de vorige pagina in mijn browser geschiedenis. in mijn geval is dan mijn table
         history.back();
       }
 
       // Dynamische data (dit kan ook uit een API komen)
+      //De base uit mijn sessie storage halen
       const json = sessionStorage.getItem("Base");
+      //het object parsen naar json
       const jsonParsed = JSON.parse(json);
+      //console log voor testen
       console.log("view:" + jsonParsed);
+      //table body selecteren zodat ik data kan schrijven
       const tbody = document.getElementById("dataTable");
 
       //array wordt [aantal,name,grade]
+      //count array
       let buildingCoreEntitiesCountArray = [];
+      //prefabname array
       let buildingCoreEntitiesNameArray = [];
+      //prefab grade array
       let buildingCoreEntitiesGradeArray = [];
 
       //loop door alle JSON prefabname entiteiten
@@ -538,20 +567,30 @@
         const arr = jsonParsed[prefabname];
 
         //Loop door alle prefabnamen array
+        //eerst kijken of het wel een array is
         if (Array.isArray(arr)) {
+          //voor elke entiteit de array uitlezen en daar functionaliteid aan hangen.
           arr.forEach((entities) => {
             //Check if prefabname contains building core
             if (
               entities.prefabname &&
+              //dit zorgt dat ik alleen building prefabs krijg zoals walls en foundations en niet furnaces en andere deployables
               entities.prefabname.includes("assets/prefabs/building core/")
             ) {
               //Acties voor eerste item in de array
+              //als entiteit nog niet bestaat in de array maakt hij die aan
               if (buildingCoreEntitiesNameArray.length == 0) {
+                //voeg een count toe aan de count array
                 buildingCoreEntitiesCountArray = [1];
+                // voeg de naam toe aan de naam array
                 buildingCoreEntitiesNameArray = [entities.prefabname];
+                //voeg de grade toe aan de grade array
                 buildingCoreEntitiesGradeArray = [entities.grade];
+                //console log voor testen mag eig weg maar doe ik nog niet
                 console.log("eerste item in array aangemaakt");
+                //simpele else
               } else {
+                //vlaggetje maken om te kijken of ik een match heb gevonden in de array
                 var foundMatch = false;
                 //Loop door alle prefabnamen
                 for (let i = 0; i < buildingCoreEntitiesNameArray.length; i++) {
@@ -562,11 +601,14 @@
                   ) {
                     //Bij match gevonden de count met 1 ophogen
                     buildingCoreEntitiesCountArray[i]++;
+                    //vlaggetje op true zetten
                     foundMatch = true;
+                    //for loop breaken
                     break;
                   }
                 }
                 //Controleer of match gevonden is
+                //als er geen match gevonden is
                 if (!foundMatch) {
                   //Vul arrays met nieuw item
                   buildingCoreEntitiesCountArray.push(1);
@@ -581,7 +623,7 @@
           });
         }
       }
-
+      //functie om de kosten te berekenen
       function berekenComponentKosten(componentNaam, kwaliteit, aantal) {
         // Converteer kwaliteitsnummer naar materiaalnaam
         const gradeNaarMateriaal = {
@@ -625,37 +667,48 @@
         return totaalKosten;
       }
 
+      //een foreach die er voor zorgt dat data in de table wordt geschreven
       for (let i = 0; i < buildingCoreEntitiesNameArray.length; i++) {
+        //nieuwe row aanmaken
         row = document.createElement("tr");
+        //de naam string
         const str = buildingCoreEntitiesNameArray[i];
+        //splitten van de string
         const words = str.split("/");
+        //component name is altijd [3] in de string dus als we die splitten krijgen wij alteid de naam
         const componentName = words[3];
+        //count uitlezen en schrijven
         const count = buildingCoreEntitiesCountArray[i];
+        //grade uitlezen en schrijven
         const grade = buildingCoreEntitiesGradeArray[i];
+        //functie om totaal koste te berekenen van dit element
         const totalCost = berekenComponentKosten(componentName, grade, count);
-
+        //Voor de uiteindelijke totaal koste
         totaalKostenWantIkMoetDitDoen =
           totaalKostenWantIkMoetDitDoen + totalCost;
 
         // Create cells individually
+        //cell aanmaken voor count. Ook voeg ik gelijk een click functie toe om de sheet te openen
         const countCell = document.createElement("td");
         countCell.textContent = count;
         countCell.addEventListener("click", function () {
           openSheet(componentName, count, grade, totalCost);
         });
 
+        //cell aanmaken voor naam. Ook voeg ik gelijk een click functie toe om de sheet te openen
         const nameCell = document.createElement("td");
         nameCell.textContent = componentName;
         nameCell.addEventListener("click", function () {
           openSheet(componentName, count, grade, totalCost);
         });
-
+        //cell aanmaken voor grade. ook voeg ik gelijk een click functie toe om de sheet te openen
         const gradeCell = document.createElement("td");
         gradeCell.textContent = grade;
         gradeCell.addEventListener("click", function () {
           openSheet(componentName, count, grade, totalCost);
         });
 
+        //cell aanmaken voor totaal koste. ook voeg ik gelijk een click functie toe om de sheet te openen
         const costCell = document.createElement("td");
         costCell.textContent = totalCost;
         costCell.addEventListener("click", function () {
@@ -667,7 +720,7 @@
         row.appendChild(nameCell);
         row.appendChild(gradeCell);
         row.appendChild(costCell);
-
+        //echt toevoegen aan de table
         tbody.appendChild(row);
       }
 
@@ -680,12 +733,14 @@
       const totalCostCell = document.createElement("td");
       totalCostCell.textContent = totaalKostenWantIkMoetDitDoen;
 
+      //lege cellen en totaal door sturen
       row.appendChild(emptyCell);
       row.appendChild(totalLabelCell);
       row.appendChild(emptyCell2);
       row.appendChild(totalCostCell);
       tbody.appendChild(row);
     </script>
+    <!-- service worker -->
     <script src="sw.js"></script>
   </body>
 </html>

@@ -169,6 +169,7 @@
         changeButtonColorOnFileSelected()
       );
 
+      //functie om terug tegaan naar de splitscreen
       function backToSplitScreen() {
         // Clear the file input
         fileInput.value = "";
@@ -177,7 +178,7 @@
         // Navigate back
         window.location.href = "splitscreen.html";
       }
-
+      //functie om mijn manual json te loaden
       function loadManualJson() {
         try {
           //fileInput is mijn file picker. Controleer of bestand is geselecteerd
@@ -195,50 +196,68 @@
               reader.onload = function (e) {
                 try {
                   //jsonData is constante met verwerkte json
+                  //JSON.parse gebruiken wij om mijn file een json object te maken
                   const jsonData = JSON.parse(e.target.result);
                   // Store the JSON data in sessionStorage
+                  //hier weer. Stringify is nodig om in een session storage te maken.
+                  //later parsen wij dit weer
                   sessionStorage.setItem("Base", JSON.stringify(jsonData));
+                  //sessie storage voor back button
                   sessionStorage.setItem("LastPage", "manual.html");
                   // Redirect to component view
                   window.location.href = "componentView.html";
+                  //errors voor parsen
                 } catch (parseError) {
+                  //als het geen json bestand is
                   if (parseError instanceof SyntaxError) {
                     alert(
                       "Ongeldig JSON bestand. Controleer of het bestand correct is geformatteerd."
                     );
+                    //andere fouten bij parsen
                   } else {
                     alert(
                       `Onverwachte fout bij het verwerken van het bestand: ${parseError.message}`
                     );
                   }
+                  //oor voor de console voor extra dbug want alert showt niet genoeg voor mij
                   console.error("JSON Parse Error:", parseError);
                 }
               };
               //hier gaat de file reader het bestand uitlezen als text
+              //files[0] staat voor het eersta bestand dat de user heeft geselecteerd. er is een kans
+              //dat de user meer dan 1 bestand selecteerd
               reader.readAsText(fileInput.files[0]);
+              //error afhandeling
             } catch (err) {
+              //error voor file content corrupt prob
               if (err.name === "NotReadableError") {
                 alert(
                   "Kan het bestand niet lezen. Controleer of het bestand niet beschadigd is."
                 );
+                //als bestand beveiligt is
               } else if (err.name === "SecurityError") {
                 alert(
                   "Toegang tot het bestand geweigerd. Controleer de bestandsrechten."
                 );
+                //andere fouten die ik nog niet heb gehad.
               } else {
                 alert(
                   `Onverwachte fout bij het verwerken van het bestand: ${err.message}`
                 );
               }
+              //nog meer console logs want alerts showen niet genoeg
               console.error("File Read Error:", err);
             }
           }
+          //andere fouten
         } catch (error) {
+          //alert zelfde reden
           alert(`Er is een fout opgetreden: ${error.message}`);
+          // voor mij
           console.error("General Error:", error);
         }
       }
-
+      //button color change functie
       function changeButtonColorOnFileSelected() {
         if (fileInput.files.length > 0) {
           buttonLoadManual.classList.remove("loadButton");
@@ -247,5 +266,6 @@
         }
       }
     </script>
+    <script src="sw.js"></script>
   </body>
 </html>

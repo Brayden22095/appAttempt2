@@ -163,25 +163,34 @@
     <script src="componentsLogic.js"></script>
     <script>
       //var voor de style change button
+      //button selecteren
       const buttonLoadManual = document.querySelector(".manual");
+      //textfield selecteren
       const textInput = document.querySelector(".mdc-text-field__input");
+      //nog een keer textfield selecteren maar nu met id want dit is mijn placeholder want shit is kapot en dit is de enige fix
       const textInputLabel = document.getElementById("my-label-id");
+      //character counter selecteren
       const counter = document.getElementById("counter");
 
       //default value for the input field
       textInput.value = null;
 
+      //text input fucties
       textInput.addEventListener("input", function () {
+        //als mijn shit hidden is voor een reden maak hem block
         if (textInputLabel.style.display == "none") {
           textInputLabel.style.display = "block";
         }
+
+        //als value van mijn field groter is dan 0 hide de placeholder
         if (this.value.trim().length > 0) {
           textInputLabel.style.display = "none";
         }
-
+        //als value van mijn field 6 is (dat is de max) remove de klasse loadbutton (zorgt ervoor dat mijn knop grijs is)
         if (this.value.trim().length > 5) {
           buttonLoadManual.classList.remove("loadButton");
-        } else {
+        } //als hij niet 6 is wordt hij weer krijs
+        else {
           buttonLoadManual.classList.add("loadButton");
         }
 
@@ -197,51 +206,83 @@
         }
       });
 
+      // Luister naar wanneer het tekstveld wordt aangeklikt
       textInput.addEventListener("focus", function () {
+        // Check of het tekstveld actief is
         if (document.activeElement === textInput) {
+          // Als het veld actief is, verberg het label/placeholder
           textInputLabel.style.display = "none";
         } else {
+          // Als het veld niet actief is, check of het leeg is
           if (textInput.value.trim().length == 0) {
+            // Als het veld leeg is, toon het label
             textInputLabel.style.display = "block";
           }
         }
       });
-
+      //mijn api call functie
       function fetchBaseCode() {
+        //code uitlezen van de textfield
         const code = document
           .querySelector(".mdc-text-field__input")
+          //alle spaties weg halen
           .value.trim();
+        //als er geen code inzit
         if (!code) {
           alert("Voer een base code in.");
+          //quit de functie hier
           return;
         }
+        //als de code niet gelijk is aan 6
         if (code.length !== 6) {
           alert("De base code moet exact 6 tekens lang zijn.");
           return;
         }
+        //een proxy server die ik thuis heb runnen maar vanwegen restricties van gcWebserver mag ik die niet callen.
+        //ik heb een proxy server nodig omdat de api die ik call besloten heeft CORS restricties te hebben. hiervoor heb ik een proxy nodig
+        //thuis heb ik dus mijn pc aanstaan met server (show telefoon voor functionaliteit) dit was een quick fix want
+        //want ik moest opteid op school zijn. ik heb hier dus een andere website voor maar kom er net achter dat ik vergeten ben
+        //de manifest te veranderen
         const targetUrl = `http://77.168.228.92:5001/fortify/${code}`;
+        //de api die ik call
         //const targetUrl = `http://builderssanctuary.com/download/fortify/abuser`;
 
+        // de fetch methoden nu xml request want ik las dat het de proxy probleem zou oplossen
+        //werke dus niet xD
         const httpRequest = new XMLHttpRequest();
+        //de fetch callen
         httpRequest.open("GET", targetUrl);
+        //console log voor testen
         console.log("hier " + httpRequest);
+        // als sucess run dat
         httpRequest.onload = httpRequestSuccess;
+        //als fout run dit
         httpRequest.onerror = httpRequestError;
+        //send de request
         httpRequest.send();
       }
-
+      //oopsie daisy foutje
       function httpRequestError() {
         alert("Er is iets misgegaan! Probeer opnieuw.");
       }
-
+      //YIPEEE SUCESS!!!
       function httpRequestSuccess() {
+        //parse de response
         const json = JSON.parse(this.responseText);
+        //console log voor testen
         console.log("Fetched JSON:", json);
+        //console log voor testen
         console.log("Fetched JSON2:", JSON.stringify(json));
+        //shit in mijn sessie storage knallen
         try {
+          //sessie storage kan helaas alleen strings opslaan en niet json objecten
+          //stringify maakt het een string later maken we het weer een object
           sessionStorage.setItem("Base", JSON.stringify(json));
+          //sessie voor de back knop op de volgende pagina
           sessionStorage.setItem("LastPage", "code.html");
+          //stuur de pagina naar de componentView
           window.location.href = "componentView.html";
+          //catch als er iets fout gaan met opslaan
         } catch (storageError) {
           console.error("Storage Error:", storageError);
           alert(
@@ -250,7 +291,7 @@
           return;
         }
       }
-
+      //kleurtje veranderen
       function changeButtonColorOnFileSelected() {
         buttonLoadManual.classList.remove("loadButton");
       }
