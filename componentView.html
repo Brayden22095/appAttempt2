@@ -595,7 +595,7 @@
         // Haal het juiste materiaal op basis van kwaliteit
         const materiaalType = gradeNaarMateriaal[kwaliteit];
 
-        // Controleer of het materiaal en de kosten bestaan
+        // Controleer of het materiaal en de kosten bestaan en niet een NULL value of UNDEFINED is als 1 van deze niet waar zijn wordt er een 0 terug gegeven
         if (!materiaalType || !buildingCosts[materiaalType]) {
           return 0;
         }
@@ -603,15 +603,19 @@
         // Haal het basis component type uit de naam (alles voor de eerste punt)
         const basisComponent = componentNaam.split(".")[0];
 
-        // Bereken de kosten per stuk voor dit component
-        // Als het component een specifieke variant is (met punt), gebruik die kosten
-        // Anders gebruik de basis kosten
+        // Declareer een variabele om de kosten per stuk op te slaan
         let kostenPerStuk;
+
+        // Controleer of de componentnaam een punt bevat (bijvoorbeeld "wall.doorway")
         if (componentNaam.includes(".")) {
-          // Voor specifieke varianten zoals "wall.doorway" of "foundation.triangle"
+          // Als er een punt is, is het een specifieke variant van een component
+          // Zoek de kosten voor deze specifieke variant in de buildingCosts tabel
+          // Als de kosten niet gevonden worden, gebruik 0 als fallback waarde
           kostenPerStuk = buildingCosts[materiaalType][componentNaam] || 0;
         } else {
-          // Voor basis componenten zoals "wall" of "foundation"
+          // Als er geen punt is, is het een basis component (bijvoorbeeld "wall")
+          // Gebruik de basis kosten voor dit component type
+          // Als de kosten niet gevonden worden, gebruik 0 als fallback waarde
           kostenPerStuk = buildingCosts[materiaalType][basisComponent] || 0;
         }
 
